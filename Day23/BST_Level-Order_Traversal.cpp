@@ -1,10 +1,14 @@
 //
 // Created by Lee Jeonggeun ( cjred77@gmail.com ) on 2016. 8. 10..
-// https://www.hackerrank.com/challenges/30-binary-search-trees
+// https://www.hackerrank.com/challenges/30-binary-trees
 //
 
 #include <iostream>
 #include <cstddef>
+#include <queue>
+#include <string>
+#include <cstdlib>
+
 using namespace std;
 class Node{
 public:
@@ -15,7 +19,6 @@ public:
         left=right=NULL;
     }
 };
-
 class Solution{
 public:
     Node* insert(Node* root, int data){
@@ -36,15 +39,29 @@ public:
         }
     }
 
-    int getHeight(Node* root){
+    void levelOrder(Node * root){
         //Write your code here
-        if(root == NULL){
-            return -1;
-        }
-        return ( 1 + max(getHeight(root->left), getHeight(root->right)));
-    }
-};
+        if(root != NULL){
+            queue<Node*> q;
+            q.push(root);
+            while(!q.empty()){
+                Node* node = q.front();
+                q.pop();
+                cout << node->data << " ";
+                if(node->left != NULL){
+                    q.push(node->left);
+                }
+                if(node->right != NULL){
+                    q.push(node->right);
+                }
+            }
 
+
+        }
+
+    }
+
+};//End of Solution
 int main(){
     Solution myTree;
     Node* root=NULL;
@@ -54,7 +71,6 @@ int main(){
         cin>>data;
         root= myTree.insert(root,data);
     }
-    int height= myTree.getHeight(root);
-    cout<<height;
+    myTree.levelOrder(root);
     return 0;
 }
